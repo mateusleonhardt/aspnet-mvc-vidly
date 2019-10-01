@@ -152,9 +152,13 @@
     <Compile Include="Migrations\201909051959030_ApplyAnnotationsToCustomerName.Designer.cs">
       <DependentUpon>201909051959030_ApplyAnnotationsToCustomerName.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909062039498_genre.cs" />
-    <Compile Include="Migrations\201909062039498_genre.Designer.cs">
-      <DependentUpon>201909062039498_genre.cs</DependentUpon>
+    <Compile Include="Migrations\201910011305330_Genre.cs" />
+    <Compile Include="Migrations\201910011305330_Genre.Designer.cs">
+      <DependentUpon>201910011305330_Genre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910011324085_NumberInStock.cs" />
+    <Compile Include="Migrations\201910011324085_NumberInStock.Designer.cs">
+      <DependentUpon>201910011324085_NumberInStock.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDBContext.cs" />
@@ -163,7 +167,8 @@
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\RandomMovieViewModel.cs" />
+    <Compile Include="ViewModels\CustomerFormViewModel.cs" />
+    <Compile Include="ViewModels\MovieFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-lumen.css" />
@@ -206,6 +211,9 @@
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\CustomerForm.cshtml" />
+    <Content Include="Views\Movies\Index.cshtml" />
+    <Content Include="Views\Movies\MovieForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -239,8 +247,11 @@
     <EmbeddedResource Include="Migrations\201909051959030_ApplyAnnotationsToCustomerName.resx">
       <DependentUpon>201909051959030_ApplyAnnotationsToCustomerName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909062039498_genre.resx">
-      <DependentUpon>201909062039498_genre.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910011305330_Genre.resx">
+      <DependentUpon>201910011305330_Genre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910011324085_NumberInStock.resx">
+      <DependentUpon>201910011324085_NumberInStock.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
