@@ -3226,9 +3226,9 @@ input[type="button"].btn-block {
   }
 }
 
-.fade:not(.show) {
+/*.fade:not(.show) {
   opacity: 0;
-}
+}*/
 
 .collapse:not(.show) {
   display: none;
@@ -6078,7 +6078,9 @@ a.close.disabled {
   padding: 0.75rem;
 }
 
-.modal-open {
+/*Comment because of the bootbox*/
+
+/*.modal-open {
   overflow: hidden;
 }
 
@@ -6113,7 +6115,7 @@ a.close.disabled {
   transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
   -webkit-transform: translate(0, -50px);
           transform: translate(0, -50px);
-}
+} */
 
 @media (prefers-reduced-motion: reduce) {
   .modal.fade .modal-dialog {
@@ -6202,7 +6204,7 @@ a.close.disabled {
   outline: 0;
 }
 
-.modal-backdrop {
+/*.modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -6218,7 +6220,7 @@ a.close.disabled {
 
 .modal-backdrop.show {
   opacity: 0.5;
-}
+}*/
 
 .modal-header {
   display: -webkit-box;
