@@ -1,22 +1,23 @@
 ﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Vidly.Models
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDBContext()
-        {
-
-        }
         public DbSet<Customer> Customers { get; set; } // My domain models
         public DbSet<Movie> Movies { get; set; }// My domain models
         public DbSet<MembershipType> MembershipTypes { get; set; }
         public DbSet<Genre> Genres { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        public ApplicationDBContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
-            Database.SetInitializer<ApplicationDBContext>(null);
-            base.OnModelCreating(modelBuilder);
+        }
+
+        public static ApplicationDBContext Create()
+        {
+            return new ApplicationDBContext();
         }
     }
 }
