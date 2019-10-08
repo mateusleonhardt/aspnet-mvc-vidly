@@ -2,6 +2,8 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -363,40 +365,58 @@ namespace Vidly.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                return RedirectToAction("Index", "Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
+                if (User.Identity.IsAuthenticated)
                 {
-                    return View("ExternalLoginFailure");
+                    return RedirectToAction("Index", "Manage");
                 }
-                var user = new ApplicationUser
+
+                if (ModelState.IsValid)
                 {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    DrivingLicense = model.DrivingLicense
-                };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    // Get the information about the user from the external login provider
+                    var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                    if (info == null)
+                    {
+                        return View("ExternalLoginFailure");
+                    }
+                    var user = new ApplicationUser
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        DrivingLicense = model.DrivingLicense,
+                        Phone = model.Phone
+                    };
+                    var result = await UserManager.CreateAsync(user);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
+                    }
+                    AddErrors(result);
+                }
+
+                ViewBag.ReturnUrl = returnUrl;
+                return View(model);
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
                     }
                 }
-                AddErrors(result);
+                throw;
             }
-
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
         }
 
         //
